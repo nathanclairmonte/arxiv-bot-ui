@@ -2,24 +2,23 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Navbar, Footer, ChatBox } from "@/components/list";
+import { Navbar, Footer, ChatBox, TextInput } from "@/components/list";
 import { useState, useRef, useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-    // const [userInput, setUserInput] = useState("");
-    // const [history, setHistory] = useState([]);
+    const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState([
         {
             message: "Hi there! How can I help?",
-            type: "api",
+            type: "response",
         },
     ]);
 
     const messageListRef = useRef(null);
-    // const textAreaRef = useRef(null);
+    const textAreaRef = useRef(null);
 
     // Auto scroll chat to bottom
     useEffect(() => {
@@ -39,7 +38,16 @@ export default function Home() {
 
             <main className={styles.main}>
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
-                <div className={styles.description}>
+                <TextInput
+                    loading={loading}
+                    textAreaRef={textAreaRef}
+                    history={history}
+                    setLoading={setLoading}
+                    setMessages={setMessages}
+                />
+                <Footer />
+
+                {/* <div className={styles.description}>
                     <p>
                         Get started by editing&nbsp;
                         <code className={styles.code}>src/pages/index.js</code>
@@ -133,8 +141,7 @@ export default function Home() {
                             Instantly deploy your Next.js site to a shareable URL with&nbsp;Vercel.
                         </p>
                     </a>
-                </div>
-                <Footer />
+                </div> */}
             </main>
         </>
     );
