@@ -24,7 +24,7 @@ const Navbar = () => {
                     href="https://github.com/nathanclairmonte"
                     target="_blank"
                 >
-                    My Github
+                    Nathan's Github
                 </a>
             </div>
         </div>
