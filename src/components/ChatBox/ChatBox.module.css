@@ -16,13 +16,13 @@
     border-radius: 0.5rem;
 }
 
-.user_message {
+.query_message {
     background: #070809;
     padding: 1.5rem;
     color: #ececf1;
 }
 
-.user_message_loading {
+.query_message_loading {
     padding: 1.5rem;
     color: #ececf1;
     background: linear-gradient(to left, #070809, #1a1c20, #070809);
@@ -42,7 +42,7 @@
     }
 }
 
-.api_message {
+.response_message {
     background: #141619;
     padding: 1.5rem;
     color: #ececf1;
@@ -58,9 +58,9 @@
     }
 }
 
-.api_message,
-.user_message,
-.user_message_loading {
+.response_message,
+.query_message,
+.query_message_loading {
     display: flex;
 }
 

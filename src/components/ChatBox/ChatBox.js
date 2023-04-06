@@ -4,13 +4,13 @@ import ReactMarkdown from "react-markdown";
 
 const ChatBox = ({ messages, messageListRef, loading }) => {
     const classNameHelper = (type, length, index) => {
-        if (type === "user" && loading && index === length - 1) {
-            return styles.user_message_loading;
+        if (type === "query" && loading && index === length - 1) {
+            return styles.query_message_loading;
         } else {
-            if (type === "api") {
-                return styles.api_message;
+            if (type === "response") {
+                return styles.response_message;
             } else {
-                return styles.user_message;
+                return styles.query_message;
             }
         }
     };
@@ -26,10 +26,10 @@ const ChatBox = ({ messages, messageListRef, loading }) => {
                         className={classNameHelper(message.type, message.length, index)}
                     >
                         {/* Display icon based on message type */}
-                        {message.type === "user" ? (
+                        {message.type === "query" ? (
                             <Image
-                                src="/bot-icon.png"
-                                alt="AI"
+                                src="/user-icon.png"
+                                alt="You"
                                 width="30"
                                 height="30"
                                 className={styles.chat_icon}
@@ -37,8 +37,8 @@ const ChatBox = ({ messages, messageListRef, loading }) => {
                             />
                         ) : (
                             <Image
-                                src="/user-icon.png"
-                                alt="You"
+                                src="/bot-icon.png"
+                                alt="AI"
                                 width="30"
                                 height="30"
                                 className={styles.chat_icon}
