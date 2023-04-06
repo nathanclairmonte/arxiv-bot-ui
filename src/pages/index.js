@@ -2,11 +2,31 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Navbar, Footer } from "@/components/list";
+import { Navbar, Footer, ChatBox } from "@/components/list";
+import { useState, useRef, useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+    // const [userInput, setUserInput] = useState("");
+    // const [history, setHistory] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [messages, setMessages] = useState([
+        {
+            message: "Hi there! How can I help?",
+            type: "api",
+        },
+    ]);
+
+    const messageListRef = useRef(null);
+    // const textAreaRef = useRef(null);
+
+    // Auto scroll chat to bottom
+    useEffect(() => {
+        const messageList = messageListRef.current;
+        messageList.scrollTop = messageList.scrollHeight;
+    }, [messages]);
+
     return (
         <>
             <Head>
@@ -16,7 +36,9 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Navbar />
+
             <main className={styles.main}>
+                <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <div className={styles.description}>
                     <p>
                         Get started by editing&nbsp;
