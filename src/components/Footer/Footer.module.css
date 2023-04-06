@@ -1,0 +1,14 @@
+.footer {
+    color: #5f6368;
+    font-size: 0.8rem;
+    margin: 1.5rem;
+}
+
+.footer a {
+    font-weight: 500;
+    color: #7a7d81;
+}
+
+.footer a:hover {
+    opacity: 0.8;
+}
