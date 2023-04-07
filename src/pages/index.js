@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Navbar, Footer, ChatBox, TextInput } from "@/components/list";
+import { Navbar, Footer, ChatBox, TextInput, ArxivInput } from "@/components/list";
 import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
@@ -47,6 +47,7 @@ export default function Home() {
             <Navbar />
 
             <main className={styles.main}>
+                <ArxivInput />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <TextInput
                     loading={loading}
