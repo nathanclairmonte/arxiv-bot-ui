@@ -26,8 +26,8 @@ const ArxivInput = () => {
 
     return (
         <div className={styles.arxiv_container}>
+            <p className={styles.arxiv_input_text}>Please enter an ArXiv ID:</p>
             <div className={styles.arxiv_input_container}>
-                <p className={styles.arxiv_input_text}>Please enter an ArXiv ID:</p>
                 <form onSubmit={handleLoadPaper} className={styles.arxiv_form}>
                     <textarea
                         disabled={loading}
@@ -61,9 +61,9 @@ const ArxivInput = () => {
                         )}
                     </button>
                 </form>
-            </div>
-            <div className={styles.status_container}>
-                <p className={styles.status_text}>{statusUpdate}</p>
+                <div className={styles.status_container}>
+                    <p className={styles.status_text}>{statusUpdate}</p>
+                </div>
             </div>
         </div>
     );
