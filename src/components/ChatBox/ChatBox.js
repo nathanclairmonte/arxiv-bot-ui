@@ -23,7 +23,7 @@ const ChatBox = ({ messages, messageListRef, loading }) => {
                     // while response loads
                     <div
                         key={index}
-                        className={classNameHelper(message.type, message.length, index)}
+                        className={classNameHelper(message.type, messages.length, index)}
                     >
                         {/* Display icon based on message type */}
                         {message.type === "query" ? (
@@ -47,7 +47,7 @@ const ChatBox = ({ messages, messageListRef, loading }) => {
                         )}
                         <div className={styles.markdown_output}>
                             {/* Messages are rendered in Markdown format */}
-                            <ReactMarkdown linkTarget={"_blank"}>{message.message}</ReactMarkdown>
+                            <ReactMarkdown linkTarget={"_blank"}>{message.text}</ReactMarkdown>
                         </div>
                     </div>
                 ))}
