@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
 import { IoIosSend } from "react-icons/io";
 
-const TextInput = ({ loading, textAreaRef, setLoading, setMessages, history }) => {
+const TextInput = ({ loading, textAreaRef, history, setLoading, setMessages }) => {
     const [query, setQuery] = useState("");
 
     // error handler
@@ -11,7 +11,7 @@ const TextInput = ({ loading, textAreaRef, setLoading, setMessages, history }) =
         setMessages((prev) => [
             ...prev,
             {
-                message: `Meep morp. Houston, we have a problem!\n\n${error_message}`,
+                text: `Meep morp. Houston, we have a problem!\n\n${error_message}`,
                 type: "response",
             },
         ]);
@@ -29,35 +29,35 @@ const TextInput = ({ loading, textAreaRef, setLoading, setMessages, history }) =
             return;
         }
 
-        // update messages list
+        // update messages list + reset query
         setLoading(true);
-        setMessages((prev) => [...prev, { message: query, type: "query" }]);
+        setQuery("");
+        setMessages((prev) => [...prev, { text: query, type: "query" }]);
 
-        // // send query to API
-        // const response = await fetch("api/bot", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({ query, history }),
-        // });
-        // const data = await response.json();
+        // send query to API
+        const response = await fetch("api/bot", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ query, history }),
+        });
+        const data = await response.json();
 
-        // if (!response.ok) {
-        //     errorHandler("There was was an issue sending the API request :(");
-        //     return;
-        // }
+        if (!response.ok) {
+            errorHandler("There was was an issue sending the API request :(");
+            return;
+        }
 
-        // if (data.result.error === "Unauthorized") {
-        //     errorHandler("You aren't authorized to send a request :(");
-        //     return;
-        // }
+        if (data.result.error === "Unauthorized") {
+            errorHandler("You aren't authorized to send a request :(");
+            return;
+        }
 
         // TODO: investigate the errors here. need to figure out how best to handle
 
-        // reset query and update message list with response
-        setQuery("");
-        // setMessages((prev) => [...prev, { message: data.result.success, type: "response" }]);
+        // update message list with response
+        setMessages((prev) => [...prev, { text: data.result.success, type: "response" }]);
         setLoading(false);
     };
 

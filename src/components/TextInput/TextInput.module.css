@@ -4,7 +4,7 @@
 
 .input {
     position: relative;
-    /* resize: none; */
+    resize: none;
     font-size: 1.1rem;
     padding: 1rem 2rem 1rem 2rem;
     width: 75vw;
