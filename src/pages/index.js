@@ -49,6 +49,7 @@ export default function Home() {
             <main className={styles.main}>
                 <ArxivInput />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
+                <br />
                 <TextInput
                     loading={loading}
                     textAreaRef={textAreaRef}
