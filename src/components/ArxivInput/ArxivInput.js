@@ -25,7 +25,7 @@ const ArxivInput = () => {
     const handleEnterKeyPress = () => {};
 
     return (
-        <div className={styles.arxiv_container}>
+        <div className={styles.container}>
             <p className={styles.arxiv_input_text}>Please enter an ArXiv ID:</p>
             <div className={styles.arxiv_input_container}>
                 <form onSubmit={handleLoadPaper} className={styles.arxiv_form}>
@@ -45,7 +45,7 @@ const ArxivInput = () => {
                     />
                     <button type="submit" disabled={loading} className={styles.load_paper_button}>
                         {loading ? (
-                            <div className={styles.load_container}>
+                            <div className={styles.button_content_container}>
                                 <CircularProgress
                                     color="inherit"
                                     size={20}
@@ -54,7 +54,7 @@ const ArxivInput = () => {
                                 <p className={styles.load_text}>Loading...</p>
                             </div>
                         ) : (
-                            <div className={styles.load_container}>
+                            <div className={styles.button_content_container}>
                                 <CgSoftwareUpload className={styles.load_icon} />
                                 <p className={styles.load_text}>Load paper</p>
                             </div>
