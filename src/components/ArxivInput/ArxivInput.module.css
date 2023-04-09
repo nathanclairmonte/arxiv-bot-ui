@@ -84,8 +84,18 @@
     /* border: 1px solid white; */
 }
 
-.status_text {
+.status_neutral {
     color: snow;
+    text-align: start;
+}
+
+.status_error {
+    color: red;
+    text-align: start;
+}
+
+.status_success {
+    color: green;
     text-align: start;
 }
 
