@@ -4,22 +4,62 @@ import styles from "./ArxivInput.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { CgSoftwareUpload } from "react-icons/cg";
 
-const ArxivInput = () => {
-    const [arxivId, setArxivId] = useState("");
+const ArxivInput = ({ setVectorstore }) => {
+    const [arxivId, setArxivId] = useState("1706.03762");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({
         type: "neutral",
         message: "",
     });
 
+    // validate the arxiv ID
+    const _validateId = (id) => {
+        // if there's no period, it's already invalid
+        if (!id.includes(".")) {
+            return false;
+        }
+
+        // split the ID by the period in the middle
+        const id_split = id.split(".");
+
+        // make sure of the following:
+        // 1. Only one period in the ID
+        // 2. Before period is a string of exactly 4 digits
+        // 3. After period is a string of exactly 5 digits
+        if (id_split.length !== 2) {
+            console.log("invalid");
+        } else {
+            const isAllNums0 = /^\d+$/.test(id_split[0]);
+            const isAllNums1 = /^\d+$/.test(id_split[1]);
+            if (id_split[0].length !== 4 || !isAllNums0) {
+                return false;
+            } else if (id_split[1].length !== 5 || !isAllNums1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    };
+
     // handle loading of the inputted paper
-    const handleLoadPaper = (event) => {
+    const handleLoadPaper = async (event) => {
         // prevent browser refresh
         event.preventDefault();
 
-        // if (arxivId.trim() === "") {
-        //     return;
-        // }
+        // do nothing if field is empty
+        if (arxivId.trim() === "") {
+            return;
+        }
+
+        // validate ID
+        if (!_validateId(arxivId)) {
+            setStatus({
+                type: "error",
+                message: "Please enter a valid ArXiv ID!",
+            });
+            setVectorstore(null);
+            return;
+        }
 
         // clear text input and set loading to true
         setArxivId("");
@@ -31,29 +71,46 @@ const ArxivInput = () => {
             message: `Loading https://arxiv.org/pdf/${arxivId}.pdf...`,
         });
 
-        //load the paper into vectorstore. emulating this with a timeout
-        setTimeout(_setLoadingToFalse, 2000);
-    };
-
-    const _setLoadingToFalse = () => {
-        // remember to move this stuff up into the handler
-        // just here right now to emulate an API call with setTimeout()
-        const data = {
-            response: {
-                type: "success",
+        // send ID to API to load paper
+        const response = await fetch("api/load", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             },
-        };
+            body: JSON.stringify({ arxivId }),
+        });
+        const data = await response.json();
 
-        // update status message
+        // update status message with result
         setStatus({
-            type: data.response.type,
-            message:
-                data.response.type === "success"
-                    ? "Succes! Paper loaded."
-                    : "Something went wrong :(",
+            type: data.result.type,
+            message: data.result.message,
         });
         setLoading(false);
+
+        // //load the paper into vectorstore. emulating this with a timeout
+        // setTimeout(_setLoadingToFalse, 2000);
     };
+
+    // const _setLoadingToFalse = () => {
+    //     // remember to move this stuff up into the handler
+    //     // just here right now to emulate an API call with setTimeout()
+    //     const data = {
+    //         response: {
+    //             type: "success",
+    //         },
+    //     };
+
+    //     // update status message
+    //     setStatus({
+    //         type: data.response.type,
+    //         message:
+    //             data.response.type === "success"
+    //                 ? "Succes! Paper loaded."
+    //                 : "Something went wrong :(",
+    //     });
+    //     setLoading(false);
+    // };
 
     // select status styling based on message type
     const _statusHelper = (type) => {
