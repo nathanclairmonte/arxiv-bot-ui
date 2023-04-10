@@ -14,6 +14,7 @@ export default function Home() {
             type: "response",
         },
     ]);
+    const [vectorstore, setVectorstore] = useState(null);
 
     const messageListRef = useRef(null);
     const textAreaRef = useRef(null);
@@ -47,13 +48,14 @@ export default function Home() {
             <Navbar />
 
             <main className={styles.main}>
-                <ArxivInput />
+                <ArxivInput setVectorstore={setVectorstore} />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <br />
                 <TextInput
                     loading={loading}
                     textAreaRef={textAreaRef}
                     history={history}
+                    vectorstore={vectorstore}
                     setLoading={setLoading}
                     setMessages={setMessages}
                 />
