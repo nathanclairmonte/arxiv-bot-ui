@@ -44,7 +44,12 @@ export default async function handler(req, res) {
         const docs = await splitter.splitDocuments(data);
 
         // create vectorstore
-        const vectorstore = await HNSWLib.fromDocuments(docs, new OpenAIEmbeddings());
+        const vectorstore = await HNSWLib.fromDocuments(
+            docs,
+            new OpenAIEmbeddings({
+                openAIApiKey: process.env.OPENAI_API_KEY,
+            })
+        );
         return res.status(200).json({
             result: {
                 type: "success",
