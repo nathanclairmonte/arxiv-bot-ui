@@ -107,10 +107,10 @@ const ArxivInput = ({ messages, setDocs, setMessages }) => {
         }
 
         // reset messages list if load was successful
-        if (data.result.type === "success" && messages.length > 0) {
+        if (data.result.type === "success") {
             setMessages([
                 {
-                    text: "Hey! Ask a question :)",
+                    text: "Ask a question about the paper :)",
                     type: "response",
                 },
             ]);
