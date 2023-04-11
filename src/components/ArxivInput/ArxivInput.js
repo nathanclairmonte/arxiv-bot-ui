@@ -4,6 +4,9 @@ import styles from "./ArxivInput.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { CgSoftwareUpload } from "react-icons/cg";
 import { FiExternalLink } from "react-icons/fi";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const ArxivInput = ({ setDocs }) => {
     const [arxivId, setArxivId] = useState("");
@@ -108,11 +111,11 @@ const ArxivInput = ({ setDocs }) => {
     // select status styling based on message type
     const _statusHelper = (type) => {
         if (type === "error") {
-            return styles.status_error;
+            return `${inter.className} ${styles.status_error}`;
         } else if (type === "success") {
-            return styles.status_success;
+            return `${inter.className} ${styles.status_success}`;
         } else {
-            return styles.status_neutral;
+            return `${inter.className} ${styles.status_neutral}`;
         }
     };
 
@@ -125,7 +128,9 @@ const ArxivInput = ({ setDocs }) => {
 
     return (
         <div className={styles.container}>
-            <p className={styles.arxiv_input_text}>Please enter an ArXiv ID:</p>
+            <p className={`${inter.className} ${styles.arxiv_input_text}`}>
+                Please enter an ArXiv ID:
+            </p>
             <div className={styles.arxiv_input_container}>
                 <form onSubmit={handleLoadPaper} className={styles.arxiv_form}>
                     <textarea
@@ -150,12 +155,16 @@ const ArxivInput = ({ setDocs }) => {
                                     size={20}
                                     className={styles.load_icon}
                                 />{" "}
-                                <p className={styles.load_text}>Loading...</p>
+                                <p className={`${inter.className} ${styles.load_text}`}>
+                                    Loading...
+                                </p>
                             </div>
                         ) : (
                             <div className={styles.button_content_container}>
                                 <CgSoftwareUpload className={styles.load_icon} />
-                                <p className={styles.load_text}>Load paper</p>
+                                <p className={`${inter.className} ${styles.load_text}`}>
+                                    Load paper
+                                </p>
                             </div>
                         )}
                     </button>
@@ -169,7 +178,9 @@ const ArxivInput = ({ setDocs }) => {
                                 target="_blank"
                                 className={styles.paper_link_container}
                             >
-                                <p className={styles.paper_link_text}>Open paper</p>
+                                <p className={`${inter.className} ${styles.paper_link_text}`}>
+                                    Open paper
+                                </p>
                                 <FiExternalLink className={styles.paper_link_icon} />
                             </Link>
                         ) : null}

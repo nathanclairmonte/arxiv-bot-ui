@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./Navbar.module.css";
 import { Inter } from "next/font/google";
 
@@ -7,25 +8,25 @@ const Navbar = () => {
     return (
         <div className={styles.nav_container}>
             <div className={styles.nav_logo}>
-                <a className={inter.className} href="/">
+                <Link className={inter.className} href="/">
                     ArXiv ChatBot
-                </a>
+                </Link>
             </div>
             <div className={styles.nav_links}>
-                <a
+                <Link
                     className={inter.className}
                     href="https://github.com/nathanclairmonte/arxiv-bot-ui"
                     target="_blank"
                 >
                     Repo
-                </a>
-                <a
+                </Link>
+                <Link
                     className={inter.className}
                     href="https://github.com/nathanclairmonte"
                     target="_blank"
                 >
                     Nathan's Github
-                </a>
+                </Link>
             </div>
         </div>
     );

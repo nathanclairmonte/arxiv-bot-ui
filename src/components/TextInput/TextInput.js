@@ -2,6 +2,9 @@ import styles from "./TextInput.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
 import { IoIosSend } from "react-icons/io";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const TextInput = ({ loading, textAreaRef, history, docs, setLoading, setMessages }) => {
     const [query, setQuery] = useState("");
@@ -84,7 +87,7 @@ const TextInput = ({ loading, textAreaRef, history, docs, setLoading, setMessage
                     }
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    className={styles.input}
+                    className={`${inter.className} ${styles.input}`}
                 />
                 <button type="submit" disabled={loading} className={styles.submit_button}>
                     {loading ? (
