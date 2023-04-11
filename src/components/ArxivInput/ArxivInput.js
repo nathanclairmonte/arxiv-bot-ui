@@ -59,7 +59,15 @@ const ArxivInput = ({ setDocs }) => {
                 type: "error",
                 message: "Please enter a valid ArXiv ID!",
             });
-            setDocs(null);
+            return;
+        }
+
+        // ensure we aren't re-loading the same paper
+        if (arxivId === currentPaper) {
+            setStatus({
+                type: "success",
+                message: "That paper is already loaded!",
+            });
             return;
         }
 
