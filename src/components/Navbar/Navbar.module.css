@@ -28,6 +28,21 @@
     align-items: center;
 }
 
+.apikey_input {
+    resize: none;
+    font-size: 1.1rem;
+    padding: 1rem 2rem 1rem 2rem;
+    width: 42vw;
+    height: 42px;
+    max-width: 800px;
+    border-radius: 0.2rem;
+    border: 1px solid #30373d;
+    /* background: #070809; */
+    background: snow;
+    color: #070809;
+    outline: none;
+}
+
 @media (max-width: 600px) {
     .nav_container {
         border: 1px solid black;

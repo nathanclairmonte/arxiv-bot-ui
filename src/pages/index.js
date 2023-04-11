@@ -14,6 +14,7 @@ export default function Home() {
         },
     ]);
     const [docs, setDocs] = useState(null);
+    const [apiKey, setApiKey] = useState("");
 
     const messageListRef = useRef(null);
     const textAreaRef = useRef(null);
@@ -44,10 +45,10 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Navbar />
+            <Navbar apiKey={apiKey} setApiKey={setApiKey} />
 
             <main className={styles.main}>
-                <ArxivInput setDocs={setDocs} />
+                <ArxivInput setDocs={setDocs} setMessages={setMessages} />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <br />
                 <TextInput
@@ -55,6 +56,7 @@ export default function Home() {
                     textAreaRef={textAreaRef}
                     history={history}
                     docs={docs}
+                    apiKey={apiKey}
                     setLoading={setLoading}
                     setMessages={setMessages}
                 />

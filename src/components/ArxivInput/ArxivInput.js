@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const ArxivInput = ({ setDocs }) => {
+const ArxivInput = ({ setDocs, setMessages }) => {
     const [arxivId, setArxivId] = useState("");
     const [currentPaper, setCurrentPaper] = useState("");
     const [loading, setLoading] = useState(false);
@@ -104,6 +104,16 @@ const ArxivInput = ({ setDocs }) => {
         // update docs state with returned docs (if they are returned)
         if (data.result.docs.length !== 0) {
             setDocs(data.result.docs);
+        }
+
+        // reset messages list if load was successful
+        if (data.result.type === "success") {
+            setMessages([
+                {
+                    text: "Hi there! How can I help?",
+                    type: "response",
+                },
+            ]);
         }
         setLoading(false);
     };

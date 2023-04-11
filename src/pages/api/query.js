@@ -14,15 +14,23 @@ export default async function handler(req, res) {
         });
     }
 
+    // setting user-inputted API key
+    let key;
+    if (req.body.apiKey === process.env.SECRET_PHRASE) {
+        key = process.env.MY_OPENAI_API_KEY;
+    } else {
+        key = req.body.apiKey;
+    }
+
     try {
         // load model
-        const model = new OpenAI({ openAIApiKey: process.env.OPENAI_API_KEY });
+        const model = new OpenAI({ openAIApiKey: key });
 
         // create vectorstore
         const vectorstore = await HNSWLib.fromDocuments(
             req.body.docs,
             new OpenAIEmbeddings({
-                openAIApiKey: process.env.OPENAI_API_KEY,
+                openAIApiKey: key,
             })
         );
 
@@ -45,7 +53,7 @@ export default async function handler(req, res) {
         return res.status(500).json({
             result: {
                 type: "error",
-                message: `Something went wrong :(\n ${error}`,
+                message: `${error} \n Have you entered your API key?`,
             },
         });
     }

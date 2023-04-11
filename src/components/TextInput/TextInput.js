@@ -6,7 +6,7 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const TextInput = ({ loading, textAreaRef, history, docs, setLoading, setMessages }) => {
+const TextInput = ({ loading, textAreaRef, history, docs, apiKey, setLoading, setMessages }) => {
     const [query, setQuery] = useState("");
 
     // error handler
@@ -43,7 +43,7 @@ const TextInput = ({ loading, textAreaRef, history, docs, setLoading, setMessage
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ query, history, docs }),
+            body: JSON.stringify({ query, history, docs, apiKey }),
         });
         const data = await response.json();
 
