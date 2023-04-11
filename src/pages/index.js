@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Navbar, Footer, ChatBox, TextInput, ArxivInput } from "@/components/list";
 import { useState, useRef, useEffect } from "react";
@@ -14,6 +13,7 @@ export default function Home() {
             type: "response",
         },
     ]);
+    const [docs, setDocs] = useState(null);
 
     const messageListRef = useRef(null);
     const textAreaRef = useRef(null);
@@ -47,13 +47,14 @@ export default function Home() {
             <Navbar />
 
             <main className={styles.main}>
-                <ArxivInput />
+                <ArxivInput setDocs={setDocs} />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <br />
                 <TextInput
                     loading={loading}
                     textAreaRef={textAreaRef}
                     history={history}
+                    docs={docs}
                     setLoading={setLoading}
                     setMessages={setMessages}
                 />

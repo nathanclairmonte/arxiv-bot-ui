@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
 import { IoIosSend } from "react-icons/io";
 
-const TextInput = ({ loading, textAreaRef, history, setLoading, setMessages }) => {
+const TextInput = ({ loading, textAreaRef, history, docs, setLoading, setMessages }) => {
     const [query, setQuery] = useState("");
 
     // error handler
@@ -11,7 +11,7 @@ const TextInput = ({ loading, textAreaRef, history, setLoading, setMessages }) =
         setMessages((prev) => [
             ...prev,
             {
-                text: `Meep morp. Houston, we have a problem!\n\n${error_message}`,
+                text: `Meep morp. Houston, we have a problem! \n\n${error_message}`,
                 type: "response",
             },
         ]);
@@ -35,29 +35,23 @@ const TextInput = ({ loading, textAreaRef, history, setLoading, setMessages }) =
         setMessages((prev) => [...prev, { text: query, type: "query" }]);
 
         // send query to API
-        const response = await fetch("api/bot", {
+        const response = await fetch("api/query", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ query, history }),
+            body: JSON.stringify({ query, history, docs }),
         });
         const data = await response.json();
 
-        if (!response.ok) {
-            errorHandler("There was was an issue sending the API request :(");
+        // error handling
+        if (data.result.type === "error") {
+            errorHandler(data.result.message);
             return;
         }
-
-        if (data.result.error === "Unauthorized") {
-            errorHandler("You aren't authorized to send a request :(");
-            return;
-        }
-
-        // TODO: investigate the errors here. need to figure out how best to handle
 
         // update message list with response
-        setMessages((prev) => [...prev, { text: data.result.success, type: "response" }]);
+        setMessages((prev) => [...prev, { text: data.result.message, type: "response" }]);
         setLoading(false);
     };
 
