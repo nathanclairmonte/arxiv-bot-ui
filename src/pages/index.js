@@ -9,7 +9,7 @@ export default function Home() {
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState([
         {
-            text: "Hi there! How can I help?",
+            text: "Hey! Load a paper and then ask a question :)",
             type: "response",
         },
     ]);

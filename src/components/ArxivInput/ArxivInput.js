@@ -110,7 +110,7 @@ const ArxivInput = ({ messages, setDocs, setMessages }) => {
         if (data.result.type === "success" && messages.length > 0) {
             setMessages([
                 {
-                    text: "Hi there! How can I help?",
+                    text: "Hey! Ask a question :)",
                     type: "response",
                 },
             ]);
