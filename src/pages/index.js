@@ -48,7 +48,7 @@ export default function Home() {
             <Navbar apiKey={apiKey} setApiKey={setApiKey} />
 
             <main className={styles.main}>
-                <ArxivInput setDocs={setDocs} setMessages={setMessages} />
+                <ArxivInput messages={messages} setDocs={setDocs} setMessages={setMessages} />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <br />
                 <TextInput
