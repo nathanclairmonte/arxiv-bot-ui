@@ -3,6 +3,7 @@
     flex-direction: column;
     margin-bottom: 1rem;
     width: 75vw;
+    max-width: 800px;
     /* border: 1px solid orange; */
 }
 
@@ -78,7 +79,7 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* border: 1px solid white; */
