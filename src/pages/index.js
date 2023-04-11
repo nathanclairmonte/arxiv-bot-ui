@@ -21,8 +21,10 @@ export default function Home() {
 
     // auto scroll chat to bottom
     useEffect(() => {
-        const messageList = messageListRef.current;
-        messageList.scrollTop = messageList.scrollHeight;
+        if (messages.length > 0) {
+            const messageList = messageListRef.current;
+            messageList.scrollTop = messageList.scrollHeight;
+        }
     }, [messages]);
 
     // focus on text input whenever messages state changes
