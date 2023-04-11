@@ -77,12 +77,39 @@
     flex-grow: 1;
     flex-shrink: 10;
     margin-top: 1rem;
-    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 5px;
     /* border: 1px solid white; */
+}
+
+.paper_link_container {
+    flex-basis: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    /* border: 1px solid white; */
+}
+
+.paper_link_container:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.paper_link_text {
+    font-size: 14px;
+    color: snow;
+    text-decoration: underline;
+}
+
+.paper_link_icon {
+    font-size: 18px;
+    color: snow;
+    margin-bottom: 2px;
 }
 
 .status_neutral {

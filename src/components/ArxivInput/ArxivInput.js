@@ -1,11 +1,13 @@
-// import { setTimeout as sleep } from "timers/promises";
+import Link from "next/link";
 import { useState } from "react";
 import styles from "./ArxivInput.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { CgSoftwareUpload } from "react-icons/cg";
+import { FiExternalLink } from "react-icons/fi";
 
 const ArxivInput = ({ setDocs }) => {
     const [arxivId, setArxivId] = useState("");
+    const [currentPaper, setCurrentPaper] = useState("");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({
         type: "neutral",
@@ -61,7 +63,8 @@ const ArxivInput = ({ setDocs }) => {
             return;
         }
 
-        // clear text input and set loading to true
+        // save curr paper, clear text input and set loading to true
+        setCurrentPaper(arxivId);
         setArxivId("");
         setLoading(true);
 
@@ -93,26 +96,6 @@ const ArxivInput = ({ setDocs }) => {
         }
         setLoading(false);
     };
-
-    // const _setLoadingToFalse = () => {
-    //     // remember to move this stuff up into the handler
-    //     // just here right now to emulate an API call with setTimeout()
-    //     const data = {
-    //         response: {
-    //             type: "success",
-    //         },
-    //     };
-
-    //     // update status message
-    //     setStatus({
-    //         type: data.response.type,
-    //         message:
-    //             data.response.type === "success"
-    //                 ? "Succes! Paper loaded."
-    //                 : "Something went wrong :(",
-    //     });
-    //     setLoading(false);
-    // };
 
     // select status styling based on message type
     const _statusHelper = (type) => {
@@ -172,6 +155,16 @@ const ArxivInput = ({ setDocs }) => {
                 {status.message ? (
                     <div className={styles.status_container}>
                         <p className={_statusHelper(status.type)}>{status.message}</p>
+                        {status.message && status.type === "success" ? (
+                            <Link
+                                href={`https://arxiv.org/pdf/${currentPaper}.pdf`}
+                                target="_blank"
+                                className={styles.paper_link_container}
+                            >
+                                <p className={styles.paper_link_text}>Open paper</p>
+                                <FiExternalLink className={styles.paper_link_icon} />
+                            </Link>
+                        ) : null}
                     </div>
                 ) : null}
             </div>
