@@ -5,7 +5,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { CgSoftwareUpload } from "react-icons/cg";
 
 const ArxivInput = ({ setDocs }) => {
-    const [arxivId, setArxivId] = useState("1706.03762");
+    const [arxivId, setArxivId] = useState("");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({
         type: "neutral",
@@ -126,7 +126,11 @@ const ArxivInput = ({ setDocs }) => {
     };
 
     // handle pressing of the enter key, want to load paper when this happens
-    const handleEnterKeyPress = () => {};
+    const handleEnterKeyPress = (event) => {
+        if (event.key === "Enter" && arxivId) {
+            handleLoadPaper(event);
+        }
+    };
 
     return (
         <div className={styles.container}>
