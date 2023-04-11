@@ -86,10 +86,12 @@ const ArxivInput = ({ setVectorstore }) => {
             type: data.result.type,
             message: data.result.message,
         });
-        setLoading(false);
 
-        // //load the paper into vectorstore. emulating this with a timeout
-        // setTimeout(_setLoadingToFalse, 2000);
+        // update vectorstore state with returned vectorstore (if it is returned)
+        if (data.result.vectorstore) {
+            setVectorstore(data.result.vectorstore);
+        }
+        setLoading(false);
     };
 
     // const _setLoadingToFalse = () => {
