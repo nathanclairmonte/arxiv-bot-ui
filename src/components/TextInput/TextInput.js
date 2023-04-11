@@ -3,7 +3,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
 import { IoIosSend } from "react-icons/io";
 
-const TextInput = ({ loading, textAreaRef, history, vectorstore, setLoading, setMessages }) => {
+const TextInput = ({ loading, textAreaRef, history, docs, setLoading, setMessages }) => {
     const [query, setQuery] = useState("");
 
     // error handler
@@ -40,7 +40,7 @@ const TextInput = ({ loading, textAreaRef, history, vectorstore, setLoading, set
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ query, history, vectorstore }),
+            body: JSON.stringify({ query, history, docs }),
         });
         const data = await response.json();
 

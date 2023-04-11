@@ -1,7 +1,5 @@
 import { PDFLoader } from "langchain/document_loaders";
-import { OpenAIEmbeddings } from "langchain/embeddings";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import { HNSWLib } from "langchain/vectorstores";
 
 import fs from "fs";
 import path from "path";
@@ -43,18 +41,11 @@ export default async function handler(req, res) {
         });
         const docs = await splitter.splitDocuments(data);
 
-        // create vectorstore
-        const vectorstore = await HNSWLib.fromDocuments(
-            docs,
-            new OpenAIEmbeddings({
-                openAIApiKey: process.env.OPENAI_API_KEY,
-            })
-        );
         return res.status(200).json({
             result: {
                 type: "success",
                 message: "Success! Paper loaded.",
-                vectorstore: vectorstore,
+                docs: docs,
             },
         });
     } catch (error) {
@@ -62,7 +53,7 @@ export default async function handler(req, res) {
             result: {
                 type: "error",
                 message: `Something went wrong :(\n${error}`,
-                vectorstore: null,
+                docs: [],
             },
         });
     }

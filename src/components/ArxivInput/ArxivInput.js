@@ -4,7 +4,7 @@ import styles from "./ArxivInput.module.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { CgSoftwareUpload } from "react-icons/cg";
 
-const ArxivInput = ({ setVectorstore }) => {
+const ArxivInput = ({ setDocs }) => {
     const [arxivId, setArxivId] = useState("1706.03762");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({
@@ -57,7 +57,7 @@ const ArxivInput = ({ setVectorstore }) => {
                 type: "error",
                 message: "Please enter a valid ArXiv ID!",
             });
-            setVectorstore(null);
+            setDocs(null);
             return;
         }
 
@@ -87,9 +87,9 @@ const ArxivInput = ({ setVectorstore }) => {
             message: data.result.message,
         });
 
-        // update vectorstore state with returned vectorstore (if it is returned)
-        if (data.result.vectorstore) {
-            setVectorstore(data.result.vectorstore);
+        // update docs state with returned docs (if they are returned)
+        if (data.result.docs.length !== 0) {
+            setDocs(data.result.docs);
         }
         setLoading(false);
     };
