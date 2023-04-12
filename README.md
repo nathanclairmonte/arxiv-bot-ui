@@ -4,7 +4,7 @@
 
 This is the repo for my ArXiv ChatBot application, deployed with Vercel [here](https://arxiv-bot-ui.vercel.app).
 
-This application uses Next.js on the frontend and LangChain JS to handle document loading and question answering over the document on the backend.
+This application uses [Next.js](https://nextjs.org/docs) on the frontend and [LangChain JS](https://github.com/hwchase17/langchainjs/) with [Next.js API routes](https://nextjs.org/docs/api-routes/introduction) on the backend to handle document loading and question answering over the document.
 
 ## To run the chatbot locally
 
