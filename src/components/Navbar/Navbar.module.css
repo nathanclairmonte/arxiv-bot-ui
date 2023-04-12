@@ -8,7 +8,7 @@
 }
 
 .nav_container a {
-    color: snow;
+    color: #eb9722;
     font-weight: 400;
 }
 
@@ -24,14 +24,15 @@
 .nav_links {
     width: 16rem;
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    justify-content: flex-end;
+    padding-right: 20px;
+    /* border: 1px solid white; */
 }
 
 .apikey_input {
     resize: none;
     font-size: 1.1rem;
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 1rem;
     width: 42vw;
     height: 42px;
     max-width: 800px;

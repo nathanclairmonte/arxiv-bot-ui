@@ -13,12 +13,8 @@ const Navbar = ({ apiKey, setApiKey }) => {
                 </Link>
             </div>
             <input
-                // disabled={loading}
-                // onKeyDown={handleEnterKeyPress}
-                // ref={textAreaRef}
                 autoFocus={false}
                 rows={1}
-                // maxLength={512}
                 type="password"
                 id="apiKey"
                 name="apiKey"
@@ -35,13 +31,13 @@ const Navbar = ({ apiKey, setApiKey }) => {
                 >
                     Repo
                 </Link>
-                <Link
+                {/* <Link
                     className={inter.className}
                     href="https://github.com/nathanclairmonte"
                     target="_blank"
                 >
-                    Nathan's Github
-                </Link>
+                    My Github
+                </Link> */}
             </div>
         </div>
     );
