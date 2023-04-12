@@ -53,7 +53,7 @@ export default async function handler(req, res) {
         return res.status(500).json({
             result: {
                 type: "error",
-                message: `${error} \n Have you entered your API key?`,
+                message: `${error}. \n Have you entered your API key?`,
             },
         });
     }

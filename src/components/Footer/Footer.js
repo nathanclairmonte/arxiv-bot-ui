@@ -10,12 +10,16 @@ const Footer = () => {
         <div className={styles.footer}>
             <div className={styles.footer_text}>
                 <p className={inter.className}>
-                    Built by{" "}
+                    Made by{" "}
                     <Link href="https://www.linkedin.com/in/nathanclairmonte/" target="_blank">
                         Nathan Clairmonte
                     </Link>
                     . Powered by{" "}
-                    <Link href="https://github.com/hwchase17/langchain" target="_blank">
+                    <Link href="https://nextjs.org/" target="_blank">
+                        Next.js
+                    </Link>{" "}
+                    and{" "}
+                    <Link href="https://langchain.com/" target="_blank">
                         LangChain
                     </Link>
                     .
