@@ -19,17 +19,23 @@ export default function Home() {
     const messageListRef = useRef(null);
     const textAreaRef = useRef(null);
 
-    // auto scroll chat to bottom
+    // auto scroll chat to bottom whenever messages state changes
     useEffect(() => {
-        if (messages.length > 0) {
+        if (messages.length > -1) {
             const messageList = messageListRef.current;
-            messageList.scrollTop = messageList.scrollHeight;
-        }
-    }, [messages]);
 
-    // focus on text input whenever messages state changes
-    useEffect(() => {
-        textAreaRef.current.focus();
+            // save current window scroll position
+            const prevWinScrollY = window.scrollY;
+
+            // scroll chat to bottom
+            messageList.scrollTop = messageList.scrollHeight;
+
+            // refocus on the text input
+            textAreaRef.current.focus();
+
+            // restore window scroll position
+            window.scrollTo(0, prevWinScrollY);
+        }
     }, [messages]);
 
     // ensure that history keeps up to date and never exceeds 2 messages
