@@ -8,7 +8,7 @@ import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const ArxivInput = ({ messages, setDocs, setMessages }) => {
+const ArxivInput = ({ setDocs, setMessages }) => {
     const [arxivId, setArxivId] = useState("");
     const [currentPaper, setCurrentPaper] = useState("");
     const [loading, setLoading] = useState(false);

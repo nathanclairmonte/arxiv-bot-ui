@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
-import { Navbar, Footer, ChatBox, TextInput, ArxivInput } from "@/components/list";
+import { Navbar, Footer, ChatBox, TextInput, ArxivInput, PDFInput } from "@/components/list";
 import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
@@ -56,7 +56,8 @@ export default function Home() {
             <Navbar apiKey={apiKey} setApiKey={setApiKey} />
 
             <main className={styles.main}>
-                <ArxivInput messages={messages} setDocs={setDocs} setMessages={setMessages} />
+                {/* <ArxivInput setDocs={setDocs} setMessages={setMessages} /> */}
+                <PDFInput setDocs={setDocs} setMessages={setMessages} />
                 <ChatBox messages={messages} messageListRef={messageListRef} loading={loading} />
                 <br />
                 <TextInput
