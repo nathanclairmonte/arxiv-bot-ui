@@ -42,6 +42,7 @@
     background: snow;
     color: #070809;
     outline: none;
+    margin-left: 1rem;
 }
 
 @media (max-width: 600px) {

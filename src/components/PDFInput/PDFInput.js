@@ -9,8 +9,7 @@ import styles from "./PDFInput.module.css";
 const inter = Inter({ subsets: ["latin"] });
 
 const PDFInput = ({ setDocs, setMessages }) => {
-    const [localFile, setLocalFile] = useState(null);
-    const [localFileBlob, setLocalFileBlob] = useState(null);
+    const [file, setFile] = useState(null);
     const [currentFilename, setCurrentFilename] = useState("");
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState({
@@ -40,25 +39,8 @@ const PDFInput = ({ setDocs, setMessages }) => {
 
         // save file to state if it exists
         if (event.target.files && event.target.files[0]) {
-            // get file blob
-            const readBlob = (file) =>
-                new Promise((resolve, _) => {
-                    const reader = new FileReader();
-
-                    reader.onload = (event) => {
-                        resolve(event.target.result);
-                    };
-
-                    reader.readAsBinaryString(file);
-                });
-            const fileBlob = await readBlob(event.target.files[0]);
-            // const fileBlob = new Blob([fileArrayBuffer], { type: "application/pdf" });
-            console.log(event.target.files[0]);
-            console.log(fileBlob);
-
             // update state with relevant info
-            setLocalFile(event.target.files[0]);
-            setLocalFileBlob(fileBlob);
+            setFile(event.target.files[0]);
             setFileChosen(true);
         }
     };
@@ -71,7 +53,7 @@ const PDFInput = ({ setDocs, setMessages }) => {
 
         // reset all file-related pieces of state
         setFileChosen(false);
-        setLocalFile(null);
+        setFile(null);
         setCurrentFilename("");
     };
 
@@ -90,7 +72,7 @@ const PDFInput = ({ setDocs, setMessages }) => {
         }
 
         // ensure we aren't re-loading the same PDF
-        if (localFile.name === currentFilename) {
+        if (file.name === currentFilename) {
             setStatus({
                 type: "success",
                 message: "That PDF is already loaded!",
@@ -99,7 +81,7 @@ const PDFInput = ({ setDocs, setMessages }) => {
         }
 
         // check file size
-        const size = parseInt((localFile.size / 1024 / 1024).toFixed(4));
+        const size = parseInt((file.size / 1024 / 1024).toFixed(4));
         const maxMB = 16;
         if (size > maxMB) {
             setStatus({
@@ -110,28 +92,58 @@ const PDFInput = ({ setDocs, setMessages }) => {
         }
 
         // save current filename and start file load process
-        setCurrentFilename(localFile.name);
+        setCurrentFilename(file.name);
         setLoading(true);
 
         // give status update
         setStatus({
             type: "neutral",
-            message: `Loading ${fileInputRef.current.files[0].name}...`,
+            message: `Loading ${file.name}...`,
         });
 
-        // send PDF to API to split into chunks
-        // const form = new FormData();
-        // form.append("localFile", localFile);
-        const response = await fetch("api/split", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ localFileBlob }),
-            // body: localFileBlob,
-            // body: form,
+        // get info to upload file to S3
+        const fileName = encodeURIComponent(file.name);
+        const fileType = encodeURIComponent(file.type);
+        const response = await fetch(`/api/upload-to-s3?fileName=${fileName}&fileType=${fileType}`);
+        const { url, fields } = await response.json();
+
+        // use info received to upload file
+        const formData = new FormData();
+        Object.entries({ ...fields, file }).forEach(([key, value]) => {
+            formData.append(key, value);
         });
-        const data = await response.json();
+
+        try {
+            const upload = await fetch(url, {
+                method: "POST",
+                body: formData,
+            });
+
+            // // check this response now
+            // if (upload.ok) {
+            //     setStatus({
+            //         type: "success",
+            //         message: `Success! ${file.name} uploaded.`,
+            //     });
+            // } else {
+            //     const errorMsg = await upload.text();
+            //     setStatus({
+            //         type: "error",
+            //         message: `Upload failed :( \n ${upload.status} ${errorMsg}`,
+            //     });
+            // }
+        } catch (error) {
+            const errorMsg = await upload.text();
+            setStatus({
+                type: "error",
+                message: `Upload failed :( \n ${upload.status} ${errorMsg}`,
+            });
+        }
+
+        // split PDF into chunks
+        const response2 = await fetch(`api/split?fileName=${file.name}`);
+        // const response2 = await fetch(`api/split?fileName=Nathan Clairmonte CV.pdf`);
+        const data = await response2.json();
 
         // update status message with result
         setStatus({
@@ -152,9 +164,6 @@ const PDFInput = ({ setDocs, setMessages }) => {
                     type: "response",
                 },
             ]);
-        } else {
-            // otherwise, close file
-            handleCloseFile();
         }
         setLoading(false);
     };
